@@ -92,7 +92,7 @@ def resample_ttest(x,baseline = 0.5,n_ps = 100,n_permutation = 5000,one_tail = F
     temp            = temp.mean(0)# take the mean over the sames because we only care about the mean of the null distribution
     # along each row of the matrix (n_row = n_permutation), we count instances that are greater than the observed mean of the experiment
     # compute the proportion, and we get our p values
-    
+
     if one_tail:
         ps = (np.sum(temp >= experiment,axis=0)+1.) / (n_permutation + 1.)
     else:
@@ -112,7 +112,7 @@ def resample_ttest_2sample(a,b,n_ps=100,n_permutation=5000,one_tail=False,match_
         temp                    = np.zeros((n_permutation,n_ps))
         # the next part of the code is to estimate the "randomized situation" under the given data's distribution
         # by randomized the items in each group (a and b), we can compute the chance level differences
-        # and then we estimate the probability of the chance level exceeds the true difference 
+        # and then we estimate the probability of the chance level exceeds the true difference
         # as to represent the "p value"
         try:
             iterator            = tqdm(range(n_ps),desc='ps')
@@ -161,7 +161,7 @@ class MCPConverter(object):
         else:
             self.sorted_pvals         = np.array(sorted(pvals.copy()))
         self.order                    = sorted(range(len(pvals)), key=lambda x: pvals[x])
-    
+
     def adjust(self, method           = "holm"):
         import statsmodels as sms
         """
@@ -181,7 +181,7 @@ class MCPConverter(object):
             return sms.stats.multitest.local_fdr(abs(self.sorted_zscores))
         else:
             raise ValueError("invalid method entered: '{}'".format(method))
-            
+
     def adjust_many(self, methods = ["bonferroni", "holm", "bh", "lfdr"]):
         if self.zscores is not None:
             df = pd.DataFrame(np.c_[self.sorted_pvals, self.sorted_zscores], columns=["p_values", "z_scores"])
@@ -205,7 +205,7 @@ def binarize(labels):
 def load_preprocessed(pre_fil):
     """
     By Usman
-    
+
     Load all preprocessed data for a specific roi (stored @ pre_fil).
 
     Inputs:
@@ -229,8 +229,8 @@ def load_preprocessed(pre_fil):
 
 def get_blocks(dataset__,label_map,key_type='labels'):
     """
-    # use ids, chunks,and labels to make unique blocks of the pre-average dataset, because I don't want to 
-    # average the dataset until I actually want to, but at the same time, I want to balance the data for 
+    # use ids, chunks,and labels to make unique blocks of the pre-average dataset, because I don't want to
+    # average the dataset until I actually want to, but at the same time, I want to balance the data for
     # both the training and test set.
     """
     ids                     = dataset__.sa.id.astype(int)
@@ -241,7 +241,7 @@ def get_blocks(dataset__,label_map,key_type='labels'):
             labels              = np.array([label_map[item] for item in dataset__.sa.targets])[:,-1]
         except:# not in metasema
             labels              = np.array([label_map[item] for item in dataset__.sa.targets])
-        
+
     elif key_type == 'words':
         labels              = np.array([label_map[item] for item in dataset__.sa.words])
     sample_indecies         = np.arange(len(labels))
@@ -257,7 +257,7 @@ def customized_partition(dataset__,label_map):
     """
     To customize the random partitioning, this function would randomly select instance of volumes
     that correspond to unique words used in an experiment from different scanning blocks to form
-    the test set. 
+    the test set.
     By doing so, we create a quasi-leave-one-block-out cross-validation
     """
     unique_words    = np.unique(dataset__.sa.words)
@@ -326,7 +326,7 @@ def check_train_test_splits(idxs_test):
                 if len(item1) == len(item2):
                     sample1 = np.sort(item1)
                     sample2 = np.sort(item2)
-                    
+
                     temp.append(np.sum(sample1 == sample2) == len(sample1))
     temp = np.array(temp)
     return any(temp)
@@ -339,9 +339,9 @@ def check_train_balance(dataset__,idx_train,keys):
         else:
             key_major = keys[1]
             key_minor = keys[0]
-        
+
         ids_major = dataset__[idx_train].sa.id[dataset__[idx_train].sa.targets == key_major]
-        
+
         for n in range(len(idx_train)):
             random_pick = np.random.choice(np.unique(ids_major),size = 1)[0]
             # print(random_pick,np.unique(ids_major))
@@ -355,7 +355,7 @@ def check_train_balance(dataset__,idx_train,keys):
                 else:
                     key_major = keys[1]
                     key_minor = keys[0]
-                
+
                 ids_major = dataset__[idx_train].sa.id[dataset__[idx_train].sa.targets == key_major]
             elif np.abs(new_counts['1.0'] - new_counts['2.0']) < 4:
                 break
@@ -369,206 +369,17 @@ def Find_Optimal_Cutoff(target, predicted):
     predicted : Matrix with predicted data, where rows are observations
 
     Returns
-    -------     
+    -------
     list type, with optimal cutoff value
 
     """
     fpr, tpr, threshold         = roc_curve(target, predicted)
-    i                           = np.arange(len(tpr)) 
+    i                           = np.arange(len(tpr))
     roc                         = pd.DataFrame({'tf' : pd.Series(tpr-(1-fpr), index=i), 'threshold' : pd.Series(threshold, index=i)})
     roc_t                       = roc.iloc[(roc.tf-0).abs().argsort()[:1]]
 
-    return list(roc_t['threshold']) 
+    return list(roc_t['threshold'])
 
-def cross_CV( source_set,           # pymvpa dataset - source dataset
-              target_set,           # pymvpa dataset - target dataset 
-              idx_train_source,     # indecies of the training set in the source dataset
-              idx_train_target,     # indecies of the training set in the target dataset
-              idx_test_target,      # indecies of the test set in the target dataset
-              pipeline,             # pipeline that contains a scaler, a feature processor, and an estimator
-              label_map,            # one hot label map used in deep learning models
-              results,              # the dictionary for storing the results
-              sub_name,             # subject name
-              fold,                 # cross validation fold
-              model_name,           # name of the pipeline
-              language,             # language of the stimuli
-              condition_target,
-              condition_source,
-              roi_name = None,      # not None if we work on selected ROI data
-              average = True,       # averaging the trainig data
-              transfer = False,     # do I do domain adaptation
-              print_train = False,
-              concatenate = False,
-              flip = False,
-              to_save = True,
-              MultiOutput = False,
-              ):
-    """
-    unified pipeline for decoding across many experiments and conditions 
-    
-    Inputs:
-    --------
-    source_set:         pymvpa dataset, used to get the primary training dataset
-    target_set:         pymvpa dataset, used to get the secondary training dataset and/or the testing dataset
-    idx_train_source:   indecies of the training set in the source dataset
-    idx_train_target:   indecies of the training set in the target dataset
-    idx_test_target:    indecies of the test set in the target dataset
-    pipeline:           scitkit learn pipeline/estimator, predict_proba required
-    label_map:          a dictionary for creating the one hot labels for cross validation
-    results:            a dictionary for storing the results and other attributes
-    sub_name:           subject's coded name
-    fold:               a counting unit
-    model_name:         name of the pipeline
-    language:           language in which the stimuli is
-    condition_target:   condition/conscious in which is the subject is for the target data
-    condition_source:   condition/conscious in which is the subject is for the source data
-    roi_name:           name of the ROI
-    average:            control whether to average the training set/s
-    transfer:           indicator of whether this pipeline is in transfer learning/domain adaptation
-    print_train:        to print out the training informations
-    concatenate:        domain adaptation specific, whether to combine the primary and secondary training dataset
-    flip:               doubling the size of the training dataset by flipping the training set matrix left-right, and concatenate them
-    to_save:            control whether to save the outputs
-    ----------------------------------------------------------------------------------------------------------
-    Returns:
-    --------
-    results:            a dictionary for storing the results and other attributes
-    score_baseline1:    roc auc
-    score_baseline2:    matthews correlation coefficient
-    score_baseline3:    f1 score
-    score_baseline4:    log loss value
-    """
-    # select the training and testing split again to make sure we do the right cv
-    tr_source           = source_set[idx_train_source]
-    tr_target           = target_set[idx_train_target]
-    te                  = target_set[idx_test_target]
-    # average the test data for the baseline model
-    try:
-        te              = te.get_mapped(mean_group_sample(['chunks', 'id'],order = 'occurrence'))
-    except:
-        print('it is socialcon, and it is already been averaged')
-    # average the train data for baseline to improve the signal to noise ratio
-    if average:
-        tr_source       = tr_source.get_mapped(mean_group_sample(['chunks', 'id'],order = 'occurrence'))
-        tr_target       = tr_target.get_mapped(mean_group_sample(['chunks', 'id'],order = 'occurrence'))
-    # get the numpy arrays
-    X_train_source      = tr_source.samples.astype('float32')
-    X_train_target      = tr_target.samples.astype('float32')
-    X_test              = te.samples.astype('float32')
-    # transfer the string labels to integers
-    y_train_source      = np.array([label_map[item] for item in tr_source.targets])
-    y_train_target      = np.array([label_map[item] for item in tr_target.targets])
-    y_test              = np.array([label_map[item] for item in te.targets])
-    
-    
-    # whether to combine the primary and secondary datasets
-    if concatenate:
-        X_train         = np.concatenate([X_train_source,X_train_target])
-        y_train         = np.concatenate([y_train_source,y_train_target])
-    else:
-        X_train         = X_train_source
-        y_train         = y_train_source
-    # whether to double the size of training dataset
-    if flip:
-        X_train_flip    = np.fliplr(X_train)
-        X_train         = np.concatenate([X_train,X_train_flip])
-        y_train         = np.concatenate([y_train,y_train])
-    # check the size of the labels, if it does NOT have 2 columns, make it so
-    if y_train.shape[-1]== 2:
-        labels_train    = y_train
-        labels_test     = y_test
-    else:
-        labels_train    = OneHotEncoder().fit_transform(y_train.reshape(-1,1)).toarray()
-        labels_test     = OneHotEncoder().fit_transform(y_test.reshape(-1,1)).toarray()
-    
-    if print_train:
-        print('train on {} samples, test on {} samples by {}'.format(
-                X_train.shape[0],
-                te.shape[0],
-                model_name))
-    # shuffle the order of trials for both features and targets
-    np.random.seed(12345)
-    X_train,labels_train    = shuffle(X_train,labels_train)
-    # train the classification pipeline
-    if MultiOutput:
-        pipeline.fit(X_train,labels_train)
-        
-        pred_ = np.array(pipeline.predict_proba(X_test))[:,:,-1]
-        if print_train:
-            print('test labels',labels_test,'prediction',pred_)
-        score_baseline1         = np.array([roc_auc_score(a,b) for a,b in zip(labels_test.T,pred_)])
-        threshold_              = np.array([Find_Optimal_Cutoff(a,b) for a,b in zip(labels_test.T,pred_)])
-        score_baseline2         = np.array([matthews_corrcoef(a,b>t) for a,b,t in zip(labels_test.T,pred_,threshold_)])
-        score_baseline3         = np.array([f1_score(a,b>t) for a,b,t in zip(labels_test.T,pred_,threshold_)])
-        score_baseline4         = np.array([log_loss(a,b) for a,b in zip(labels_test.T,pred_)])
-        cm                      = np.array([confusion_matrix(a,b>t) for a,b,t in zip(labels_test.T,pred_,threshold_)])
-        tn, fp, fn, tp          = cm.mean(0).flatten()
-    else:
-        pipeline.fit(X_train,labels_train[:,-1])
-        if print_train:
-            print('training score = {:.2}'.format(pipeline.score(X_train,labels_train[:,-1])))
-        # provide probabilistic predictions on the test data
-        pred_                   = pipeline.predict_proba(X_test)
-        if print_train:
-            print('test labels',labels_test[:,-1],'prediction',pred_[:,-1])
-        """"
-        Compute Area Under the Receiver Operating Characteristic Curve (ROC AUC) from prediction scores.
-         For binary y_true, y_score is supposed to be the score of the class with greater label.
-        """
-        score_baseline1         = roc_auc_score(labels_test[:,-1],pred_[:,-1])
-        threshold_              = 0.5#np.array([Find_Optimal_Cutoff(labels_test[:,ii],pred_[:,ii])[0] for ii in range(labels_test.shape[-1])])
-        score_baseline2         = matthews_corrcoef(labels_test[:,-1],pred_[:,-1]>threshold_)
-        score_baseline3         = f1_score(labels_test[:,-1],pred_[:,-1]>threshold_, average='weighted',labels=np.unique(pred_[:,-1]>threshold_))
-        score_baseline4         = log_loss(labels_test[:,-1],pred_[:,-1])
-        cm                      = confusion_matrix(labels_test[:,-1],pred_[:,-1]>threshold_).ravel()
-        tn, fp, fn, tp          = cm
-        if print_train:
-            print(classification_report(labels_test[:,-1],pred_[:,-1]>threshold_))
-    if to_save:
-        if MultiOutput:
-            results['tn'                    ].append(tn)
-            results['fp'                    ].append(fp)
-            results['fn'                    ].append(fn)
-            results['tp'                    ].append(tp)
-            results['fold'                  ].append(fold+1)
-            results['sub'                   ].append(sub_name)
-            if roi_name is not None:
-                results['roi'               ].append(roi_name)
-            results['model'                 ].append(model_name)
-            results['roc_auc'               ].append(score_baseline1.mean())
-            results['matthews_correcoef'    ].append(score_baseline2.mean())
-            results['f1_score'              ].append(score_baseline3.mean())
-            results['log_loss'              ].append(score_baseline4.mean())
-            results['language'              ].append(language)
-            results['transfer'              ].append(transfer)
-            results['condition_target'      ].append(condition_target)
-            results['condition_source'      ].append(condition_source)
-            results['concatenate'           ].append(concatenate)
-            results['flip'                  ].append(flip)
-        else:
-            results['tn'                    ].append(tn)
-            results['fp'                    ].append(fp)
-            results['fn'                    ].append(fn)
-            results['tp'                    ].append(tp)
-            results['fold'                  ].append(fold+1)
-            results['sub'                   ].append(sub_name)
-            if roi_name is not None:
-                results['roi'               ].append(roi_name)
-            results['model'                 ].append(model_name)
-            results['roc_auc'               ].append(score_baseline1)
-            results['matthews_correcoef'    ].append(score_baseline2)
-            results['f1_score'              ].append(score_baseline3)
-            results['log_loss'              ].append(score_baseline4)
-            results['language'              ].append(language)
-            results['transfer'              ].append(transfer)
-            results['condition_target'      ].append(condition_target)
-            results['condition_source'      ].append(condition_source)
-            results['concatenate'           ].append(concatenate)
-            results['flip'                  ].append(flip)
-        
-        return results,(score_baseline1,score_baseline2,score_baseline3,score_baseline4)
-    else:
-        return (score_baseline1,score_baseline2,score_baseline3,score_baseline4)
 def regression_CV(
             source_BOLD,
             target_BOLD,
@@ -614,8 +425,8 @@ def regression_CV(
 #                        threshold                               = '1.96*mean' # induce sparsity
                         )
         source_BOLD = RF.fit_transform(source_BOLD,source_label)
-        
-    
+
+
     pipeline.fit(source_feature,source_BOLD)
     preds                   = pipeline.predict(target_feature)
     if voxel_constrain:
@@ -629,441 +440,20 @@ def regression_CV(
         score = empty_shell
     else:
         score = variance_threshold.inverse_transform(r2_score(target_BOLD,preds,multioutput='raw_values').reshape(1, -1))[0,:]
-        
+
     r_squares.append(1 - np.sum((target_BOLD - preds)**2) / np.sum(target_BOLD**2))
     scores.append(score)
     if print_train:
         print(np.sum(scores[-1] > 0))
 
     return r_squares,scores,pipeline
-def similiar_CV( 
-              source_set,           # pymvpa dataset - source dataset
-              target_set,           # pymvpa dataset - target dataset 
-              pipeline,             # pipeline that contains a scaler, a feature processor, and an estimator
-              label_map,            # one hot label map used in deep learning models
-              results,              # the dictionary for storing the results
-              sub_name,             # subject name
-              model_name,           # name of the pipeline
-              language,             # language of the stimuli
-              condition_target,
-              condition_source,
-              cv,                   # 
-              roi_name = None,      # not None if we work on selected ROI data
-              average = True,       # averaging the trainig data
-              transfer = False,     # do I do domain adaptation
-              print_train = False,
-              flip = False,
-              to_save = True,
-              ):
-    """
-    unified pipeline for decoding across many experiments and conditions 
-    
-    Inputs:
-    --------
-    source_set:         pymvpa dataset, used to get the primary training dataset
-    target_set:         pymvpa dataset, used to get the secondary training dataset and/or the testing dataset
-    pipeline:           scitkit learn pipeline/estimator, predict_proba required
-    label_map:          a dictionary for creating the one hot labels for cross validation
-    results:            a dictionary for storing the results and other attributes
-    sub_name:           subject's coded name
-    fold:               a counting unit
-    model_name:         name of the pipeline
-    language:           language in which the stimuli is
-    cv: 
-    condition_target:   condition/conscious in which is the subject is for the target data
-    condition_source:   condition/conscious in which is the subject is for the source data
-    roi_name:           name of the ROI
-    average:            control whether to average the training set/s
-    transfer:           indicator of whether this pipeline is in transfer learning/domain adaptation
-    print_train:        to print out the training informations
-    flip:               doubling the size of the training dataset by flipping the training set matrix left-right, and concatenate them
-    to_save:            control whether to save the outputs
-    ----------------------------------------------------------------------------------------------------------
-    Returns:
-    --------
-    
-    """
-    # select the training and testing split again to make sure we do the right cv
-    tr_source           = source_set
-    tr_target           = target_set
-    
-    # average the train data for baseline to improve the signal to noise ratio
-    if average:
-        tr_source       = tr_source.get_mapped(mean_group_sample(['chunks', 'id'],order = 'occurrence'))
-        tr_target       = tr_target.get_mapped(mean_group_sample(['chunks', 'id'],order = 'occurrence'))
-    # get the numpy arrays
-    X_train_source      = tr_source.samples.astype('float32')
-    y_train_source      = np.zeros(X_train_source.shape[0])
-    X_train_target      = tr_target.samples.astype('float32')
-    y_train_target      = np.ones(X_train_target.shape[0])
-    # whether to double the size of training dataset
-    if flip:
-        X_train_source_flip = np.fliplr(X_train_source)
-        X_train_source_ = np.concatenate([X_train_source,X_train_source_flip])
-        y_train_source_ = np.concatenate([y_train_source,y_train_source])
-        X_train_target_flip = np.fliplr(X_train_target)
-        X_train_target_ = np.concatenate([X_train_target,X_train_target_flip])
-        y_train_target_ = np.concatenate([y_train_target,y_train_target])
-    else:
-        X_train_source_ = X_train_source
-        y_train_source_ = y_train_source
-        X_train_target_ = X_train_target
-        y_train_target_ = y_train_target
-    # shuffle the order of trials for both features and targets
-    np.random.seed(12345)
-#    print(X_train_source_.shape,
-#          y_train_source_.shape,
-#          X_train_target_.shape,
-#          y_train_target_.shape)
-    X_train_source_,y_train_source_ = shuffle(X_train_source_,y_train_source_)
-    X_train_target_,y_train_target_ = shuffle(X_train_target_,y_train_target_)
-    X_train                         = np.concatenate([X_train_source_,X_train_target_])
-    labels_train                    = np.concatenate([y_train_source_,y_train_target_])
-    score1, score2 = [],[]
-    for train,test in cv.split(X_train,labels_train):
-        X,y = X_train[train],labels_train[train]
-        X_,y_ = X_train[test],labels_train[test]
-        clf = clone(pipeline)
-        clf.fit(X,y)
-        preds = clf.predict_proba(X_)[:,-1]
-        score1_ = roc_auc_score(y_,preds)
-        threshold_ = Find_Optimal_Cutoff(y_,preds)
-        score2_ = f1_score(y_,preds>threshold_)
-        score1.append(score1_)
-        score2.append(score2_)
-    scores = [np.mean(score1),np.mean(score2)]
-    results['sub'].append(sub_name)
-    results['roi'].append(roi_name)
-    results['model'].append(model_name)
-    results['language'].append(language)
-    results['condition_source'].append(condition_source)
-    results['condition_target'].append(condition_target)
-    results['roc_auc'].append(scores[0])
-    results['f1_score'].append(scores[1])
-    results['transfer'].append(transfer)
-    results['flip'].append(False)
-    return results,(np.mean(score1),np.mean(score2))
-def build_feature_selector_dictionary(print_train = False,class_weight = 'balanced',n_jobs = 1):
-    xgb = XGBClassifier(
-                        learning_rate                           = 1e-3, # not default
-                        max_depth                               = 100, # not default
-                        n_estimators                            = 300, # not default
-                        objective                               = 'binary:logistic', # default
-                        booster                                 = 'gbtree', # default
-                        subsample                               = 0.9, # not default
-                        colsample_bytree                        = 0.9, # not default
-                        reg_alpha                               = 0, # default
-                        reg_lambda                              = 1, # default
-                        random_state                            = 12345, # not default
-                        importance_type                         = 'gain', # default
-                        n_jobs                                  = n_jobs,# default to be 1
-                                              )
-    RF = SelectFromModel(xgb,
-                        prefit                                  = False,
-                        threshold                               = '1.96*mean' # induce sparsity
-                        )
-    uni = SelectPercentile(mutual_info_classif) # so annoying that I cannot control the random state
-    
-    return {'RandomForest':make_pipeline(MinMaxScaler(),
-                                         RF,),
-            'MutualInfo': make_pipeline(MinMaxScaler(),
-                                        uni,)
-            }
-    
-def build_model_dictionary(print_train = False,class_weight = 'balanced',n_jobs = 1):
-    svm = LinearSVC(penalty = 'l2', # default
-                    dual = True, # default
-                    tol = 1e-3, # not default
-                    random_state = 12345, # not default
-                    max_iter = int(1e3), # default
-                    class_weight = class_weight, # not default
-                    )
-    svm = CalibratedClassifierCV(base_estimator = svm,
-                                 method = 'sigmoid',
-                                 cv = 3)
-    xgb = XGBClassifier(
-                        learning_rate                           = 1e-3, # not default
-                        max_depth                               = 100, # not default
-                        n_estimators                            = 300, # not default
-                        objective                               = 'binary:logistic', # default
-                        booster                                 = 'gbtree', # default
-                        subsample                               = 0.9, # not default
-                        colsample_bytree                        = 0.9, # not default
-                        reg_alpha                               = 0, # default
-                        reg_lambda                              = 1, # default
-                        random_state                            = 12345, # not default
-                        importance_type                         = 'gain', # default
-                        n_jobs                                  = n_jobs,# default to be 1
-                                              )
-    bagging = BaggingClassifier(base_estimator                  = svm,
-                                 n_estimators                   = 30, # not default
-                                 max_features                   = 0.9, # not default
-                                 max_samples                    = 0.9, # not default
-                                 bootstrap                      = True, # default
-                                 bootstrap_features             = True, # default
-                                 random_state                   = 12345, # not default
-                                                 )
-    RF = SelectFromModel(xgb,
-                        prefit                                  = False,
-                        threshold                               = '1.96*mean' # induce sparsity
-                        )
-    uni = SelectPercentile(mutual_info_classif) # so annoying that I cannot control the random state
-    knn = KNeighborsClassifier()
-    tree = DecisionTreeClassifier(random_state = 12345,
-                                  class_weight = class_weight)
-    dummy = DummyClassifier(strategy = 'uniform',random_state = 12345,)
-    models = OrderedDict([
-            ['None + Dummy',                     make_pipeline(MinMaxScaler(),
-                                                               dummy,)],
-            ['None + Linear-SVM',                make_pipeline(MinMaxScaler(),
-                                                              svm,)],
-            ['None + Ensemble-SVMs',             make_pipeline(MinMaxScaler(),
-                                                              bagging,)],
-            ['None + KNN',                       make_pipeline(MinMaxScaler(),
-                                                              knn,)],
-            ['None + Tree',                      make_pipeline(MinMaxScaler(),
-                                                              tree,)],
-            ['PCA + Dummy',                      make_pipeline(MinMaxScaler(),
-                                                               PCA(),
-                                                               dummy,)],
-            ['PCA + Linear-SVM',                 make_pipeline(MinMaxScaler(),
-                                                              PCA(),
-                                                              svm,)],
-            ['PCA + Ensemble-SVMs',              make_pipeline(MinMaxScaler(),
-                                                              PCA(),
-                                                              bagging,)],
-            ['PCA + KNN',                        make_pipeline(MinMaxScaler(),
-                                                              PCA(),
-                                                              knn,)],
-            ['PCA + Tree',                       make_pipeline(MinMaxScaler(),
-                                                              PCA(),
-                                                              tree,)],
-            ['Mutual + Dummy',                   make_pipeline(MinMaxScaler(),
-                                                               uni,
-                                                               dummy,)],
-            ['Mutual + Linear-SVM',              make_pipeline(MinMaxScaler(),
-                                                              uni,
-                                                              svm,)],
-            ['Mutual + Ensemble-SVMs',           make_pipeline(MinMaxScaler(),
-                                                              uni,
-                                                              bagging,)],
-            ['Mutual + KNN',                     make_pipeline(MinMaxScaler(),
-                                                              uni,
-                                                              knn,)],
-            ['Mutual + Tree',                    make_pipeline(MinMaxScaler(),
-                                                              uni,
-                                                              tree,)],
-            ['RandomForest + Dummy',             make_pipeline(MinMaxScaler(),
-                                                               RF,
-                                                               dummy,)],
-            ['RandomForest + Linear-SVM',        make_pipeline(MinMaxScaler(),
-                                                              RF,
-                                                              svm,)],
-            ['RandomForest + Ensemble-SVMs',     make_pipeline(MinMaxScaler(),
-                                                              RF,
-                                                              bagging,)],
-            ['RandomForest + KNN',               make_pipeline(MinMaxScaler(),
-                                                              RF,
-                                                              knn,)],
-            ['RandomForest + Tree',              make_pipeline(MinMaxScaler(),
-                                                              RF,
-                                                              tree,)],]
-            )
-    return models
-
-def estimator_search_grids():
-    return {
-            'RandomForest':{'RandomForestClassifier__criterion':['entropy','gini'],
-                            'RandomForestClassifier__max_depth':[2,4,8,16,32,64],
-#                            'RandomForestClassifier__min_samples_split':[2,0.2,0.5],
-#                            'RandomForestClassifier__min_samples_leaf':[0.1,0.3,0.5],
-                            'RandomForestClassifier__min_impurity_decrease':[0.001,0.01,0.1],
-                            'RandomForestClassifier__n_estimators':[100,200,300,400,500],
-                                      },
-#            'Linear-SVM':{'svc__C':np.logspace(-2,2,num=5,)},
-            'Linear-SVM':{'LinearSVC__C':np.logspace(-2,2,num=5,),
-                          'LinearSVC__penalty':['l1','l2'],
-                          },
-            'Xgboost':{'XGBClassifier__max_depth':[2,4,8,16,],#32,64],
-                       'XGBClassifier__n_estimators':[100,200,300,400,500],
-                       'XGBClassifier__booster':['gbtree','gblinear','dart'],
-                       'XGBClassifier__subsample':[1.,0.9,0.8],
-                       'XGBClassifier__reg_alpha':np.logspace(-3,2,6),
-                       'XGBClassifier__reg_lambda':np.logspace(-3,2,6),
-                       'XGBClassifier__learning_rate':[1e-3,1e-2,1e-1],
-                             },
-            
-            
-            }
-def feature_selection_search_grids():
-    return {
-            'RandomForest':{'selectfrommodel__estimator__criterion':['entropy','gini'],
-                            'selectfrommodel__estimator__max_depth':[2,4,8,16,],#32,64],
-#                            'selectfrommodel__estimator__min_samples_split':[2,0.2,0.5],
-#                            'selectfrommodel__estimator__min_samples_leaf':[0.1,0.3,0.5],
-                            'selectfrommodel__estimator__min_impurity_decrease':[0.001,0.01,0.1],
-                            'selectfrommodel__estimator__n_estimators':[100,200,300,400,500],
-                              },
-            'None':{},
-            'PCA':{'pca__n_components':[None,.95,.99],},
-            }
-def eta_squared(aov):
-    aov['eta_sq'] = 'NaN'
-    aov['eta_sq'] = aov[:-1]['sum_sq']/sum(aov['sum_sq'])
-    return aov
- 
-def omega_squared(aov):
-    mse_ = aov['sum_sq'][-1]/aov['df'][-1]
-    aov['omega_sq'] = 'NaN'
-    aov['omega_sq'] = (aov[:-1]['sum_sq']-(aov[:-1]['df']*mse_))/(sum(aov['sum_sq'])+mse_)
-    return aov
-
-
-
-
-#######################################################################################################################
-#######################################################################################################################
-#######################################################################################################################
-#######################################################################################################################
-################## from https://github.com/parrt/random-forest-importances/blob/master/src/rfpimp.py#L237 #############
-################## reference http://explained.ai/rf-importance/index.html #############################################
-def oob_classifier_accuracy(rf, X_train, y_train):
-    """
-    Adjusted... 
-    Compute out-of-bag (OOB) accuracy for a scikit-learn random forest
-    classifier. We learned the guts of scikit's RF from the BSD licensed
-    code:
-    https://github.com/scikit-learn/scikit-learn/blob/a24c8b46/sklearn/ensemble/forest.py#L425
-    """
-    try:
-        X                   = X_train.values
-    except:
-        X                   = X_train.copy()
-    try:
-        y                   = y_train.values
-    except: 
-        y                   = y_train.copy()
-
-    n_samples               = len(X)
-    n_classes               = len(np.unique(y))
-    # preallocation
-    predictions             = np.zeros((n_samples, n_classes))
-    for tree in rf.estimators_: # for each decision tree in the random forest - I have put 1 tree in the forest
-        # Private function used to _parallel_build_trees function.
-        unsampled_indices   = _generate_unsampled_indices(tree.random_state, n_samples)
-        tree_preds          = tree.predict_proba(X[unsampled_indices, :])
-        predictions[unsampled_indices] += tree_preds
-
-    predicted_class_indexes = np.argmax(predictions, axis=1)# threshold the probabilistic predictions
-    predicted_classes       = [rf.classes_[i] for i in predicted_class_indexes] # use the thresholded indicies to obtain a binary prediction
-
-    oob_score               = sum(y==predicted_classes) / float(len(y))
-    return oob_score
-def sample(X_valid, y_valid, n_samples):
-    """
-    Not sure what this is doing
-    Only if the n_sample is less than the total number of samples, it subsamples the data???? Maybe?
-    """
-    if n_samples < 0: 
-        n_samples                   = len(X_valid)
-    n_samples                       = min(n_samples, len(X_valid))
-    if n_samples < len(X_valid):
-        ix                          = np.random.choice(len(X_valid), n_samples)
-        X_valid                     = X_valid.iloc[ix].copy(deep=False)  # shallow copy
-        y_valid                     = y_valid.iloc[ix].copy(deep=False)
-    return X_valid, y_valid
-def permutation_importances_raw(rf, X_train, y_train, metric, n_samples=5000):
-    """
-    Return array of importances from pre-fit rf; metric is function
-    that measures accuracy or R^2 or similar. This function
-    works for regressors and classifiers.
-    """
-    X_sample, y_sample          = shuffle(X_train, y_train)
-    # get a baseline out-of-bag sampled decoding score
-    if metric is None:
-        baseline                    = oob_classifier_accuracy(rf, X_sample, y_sample)
-    else:
-        baseline                    = metric(y_sample,rf.predict_proba(X_sample)[:,-1])
-    
-    # make suer that we work on the copy of the raw data
-    X_train                     = X_sample.copy() # shallow copy
-    X_train                     = pd.DataFrame(X_train)
-    y_train                     = y_sample
-    imp                         = []
-#    for n_ in range(100):
-#        imp_temp = []
-#        for col in X_train.columns: # for each feature
-#            save                = X_train[col].copy() # save the original
-#            X_train[col]        = np.random.uniform(save.min(),save.max(),size=save.shape) # reorder
-#            # oob score after reorder 1 and only 1 feature. 
-#            # In orther words, how much information is gone when the feature becomes unimformative
-#            try:
-#                m                   = metric(rf, X_train, y_train)
-#            except:
-#                m                   = metric(y_train,rf.predict_proba(X_train.values)[:,-1])
-#            X_train[col]        = save # restore the feature
-#            imp_temp.append(baseline - m)
-#        imp.append(imp_temp)
-    
-    for col in tqdm(X_train.columns): # for each feature
-        save                = X_train[col].copy() # save the original
-        X_train[col]        = np.random.uniform(save.min(),save.max(),size=save.shape) # reorder
-        # oob score after reorder 1 and only 1 feature. 
-        # In orther words, how much information is gone when the feature becomes unimformative
-        if metric is None:
-            m                   = oob_classifier_accuracy(rf, X_train, y_train)
-        else:
-            m                   = metric(y_train,rf.predict_proba(X_train.values)[:,-1])
-        X_train[col]        = save # restore the feature
-        imp.append(baseline - m)
-        
-    return np.array(imp)#.mean(0)
-def softmax(x):
-    """Compute softmax values for each sets of scores in x."""
-    e_x = np.exp(x - np.max(x))
-    return e_x / e_x.sum(axis=0)
-def permutation_importances(rf, X_train, y_train, metric=None, n_samples = 5000,feature_names = None):
-    """
-    Call the function, and just to make it pretty
-    """
-    imp = permutation_importances_raw(rf, X_train, y_train, metric, n_samples)
-    imp = softmax(imp)
-    I = pd.DataFrame(data={'Feature':feature_names, 'Importance':imp})
-    I = I.set_index('Feature')
-    return I
-######################################################################################################
-######################################################################################################
-def no_feature_selection(X):
-    return X
-def build_feature_selectors():
-    np.random.seed(12345)
-    xgb = XGBClassifier(
-                        learning_rate                           = 1e-3, 
-                        n_estimators                            = 300, 
-                        objective                               = 'binary:logistic', 
-                        booster                                 = 'gbtree', 
-                        subsample                               = 0.8, 
-                        reg_alpha                               = 1e-4, 
-                        reg_lambda                              = 1e-4, 
-                        random_state                            = 12345, 
-                        importance_type                         = 'gain',
-                                              )
-    pca = PCA()
-    RF = SelectFromModel(xgb,prefit = False)
-    identical_transformer = FunctionTransformer(func = no_feature_selection,
-                                                inverse_func = no_feature_selection)
-    
-    return {'None':make_pipeline(MinMaxScaler(), identical_transformer),
-            'PCA':make_pipeline(MinMaxScaler(),pca),
-            'RF':make_pipeline(MinMaxScaler(),RF),
-            }
 
 def posthoc_multiple_comparison(df_sub,depvar = '',factor='',n_ps=100,n_permutation=5000):
     """
     post hoc multiple comparison with bonferroni correction procedure
     main effect only so far
     factor: the main effect we want to test
-    
+
     """
     results = dict(
             ps_mean = [],
@@ -1094,21 +484,21 @@ def posthoc_multiple_comparison(df_sub,depvar = '',factor='',n_ps=100,n_permutat
         results['level1'].append(level1)
         results['level2'].append(level2)
     results = pd.DataFrame(results)
-    
+
     idx_sort = np.argsort(results['ps_mean'].values)
     results = results.iloc[idx_sort,:]
     pvals = results['ps_mean'].values
     converter = MCPConverter(pvals=pvals)
     d = converter.adjust_many()
     results['p_corrected'] = d['bonferroni'].values
-    
+
     return results
 def posthoc_multiple_comparison_scipy(df_sub,depvar = '',factor='',):
     """
     post hoc multiple comparison with bonferroni correction procedure
     main effect only so far
     factor: the main effect we want to test
-    
+
     """
     results = dict(
             pval = [],
@@ -1139,14 +529,14 @@ def posthoc_multiple_comparison_scipy(df_sub,depvar = '',factor='',):
         results['level1'].append(level1)
         results['level2'].append(level2)
     results = pd.DataFrame(results)
-    
+
     idx_sort = np.argsort(results['pval'].values)
     results = results.iloc[idx_sort,:]
     pvals = results['pval'].values
     converter = MCPConverter(pvals=pvals)
     d = converter.adjust_many()
     results['p_corrected'] = d['bonferroni'].values
-    
+
     return results
 def posthoc_multiple_comparison_interaction(df_sub,
                                             depvar = '',
@@ -1157,7 +547,7 @@ def posthoc_multiple_comparison_interaction(df_sub,
     post hoc multiple comparison with bonferroni correction procedure
     main effect only so far
     factor: the main effect we want to test
-    
+
     """
     results = dict(
             ps_mean = [],
@@ -1189,14 +579,14 @@ def posthoc_multiple_comparison_interaction(df_sub,
         results['level1'].append('{}_{}'.format(level1[0],level1[1]))
         results['level2'].append('{}_{}'.format(level2[0],level2[1]))
     results = pd.DataFrame(results)
-    
+
     idx_sort = np.argsort(results['ps_mean'].values)
     results = results.iloc[idx_sort,:]
     pvals = results['ps_mean'].values
     converter = MCPConverter(pvals=pvals)
     d = converter.adjust_many()
     results['p_corrected'] = d['bonferroni'].values
-    
+
     return results
 def posthoc_multiple_comparison_interaction_scipy(df_sub,
                                             depvar = '',
@@ -1205,7 +595,7 @@ def posthoc_multiple_comparison_interaction_scipy(df_sub,
     post hoc multiple comparison with bonferroni correction procedure
     main effect only so far
     factor: the main effect we want to test
-    
+
     """
     results = dict(
             pval = [],
@@ -1238,14 +628,14 @@ def posthoc_multiple_comparison_interaction_scipy(df_sub,
         results['level1'].append('{}_{}'.format(level1[0],level1[1]))
         results['level2'].append('{}_{}'.format(level2[0],level2[1]))
     results = pd.DataFrame(results)
-    
+
     idx_sort = np.argsort(results['pval'].values)
     results = results.iloc[idx_sort,:]
     pvals = results['pval'].values
     converter = MCPConverter(pvals=pvals)
     d = converter.adjust_many()
     results['p_corrected'] = d['bonferroni'].values
-    
+
     return results
 
 def stars(x):
@@ -1269,37 +659,3 @@ def compute_xy(df_sub,position_map,hue_map):
         df_add.append(row.to_frame().T)
     df_add = pd.concat(df_add)
     return df_add
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
