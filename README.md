@@ -10,8 +10,8 @@
 ## Encoding Model Pipeline
 ```
 clf             = linear_model.Ridge(
-                  alpha                       = 1e2,          # L2 penalty, higher means more weights are constrained to zero
-                  normalize                   = True,         # normalize the batch features
-                  random_state                = 12345,        # random seeding
+                  alpha        = 1e2,  # L2 penalty, higher means lower the sum of the weights
+                  normalize    = True, # normalize the batch features
+                  random_state = 12345,# random seeding
 )
 ```
