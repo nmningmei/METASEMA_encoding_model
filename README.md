@@ -20,7 +20,10 @@ clf             = linear_model.Ridge(
 ![wordembedding](https://cdn-images-1.medium.com/max/800/1*ZNdGa-lpYoZhvSFIcRaewg.png)
 Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahire/introduction-to-word-vectors-ea1d4e4b84bf))
 ### [FastText](https://fasttext.cc/docs/en/crawl-vectors.html), now supports 157 languages
-1. 
+1. Facebook AI Research lab
+2. efficient learning for text classification
+3. hierarchical classifier
+4. Huffman algorithm to build the tree $\rightarrow$
 
 ### GloVe
 
