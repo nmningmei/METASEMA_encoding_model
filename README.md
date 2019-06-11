@@ -15,3 +15,13 @@ clf             = linear_model.Ridge(
                   random_state = 12345,# random seeding
 )
 ```
+
+## Word Embedding Models
+![wordembedding](https://cdn-images-1.medium.com/max/800/1*ZNdGa-lpYoZhvSFIcRaewg.png)
+Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahire/introduction-to-word-vectors-ea1d4e4b84bf))
+### [FastText](https://fasttext.cc/docs/en/crawl-vectors.html), now supports 157 languages
+1. 
+
+### GloVe
+
+### Word2Vec
