@@ -108,6 +108,8 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 [source: Yang et al., 2018](https://www.researchgate.net/publication/325137356_Breast_cancer_screening_using_convolutional_neural_network_and_follow-up_digital_mammography)
 
+![vgg19RDM](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/computer%20vison%20embedding/metasema%20image2vec%20RDM%20(vgg19%2Clight).png)
+
 ### DenseNet121
 ```
 @inproceedings{huang2017densely,
@@ -129,6 +131,8 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 [source: Tsang, blog Nov 25, 2018](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
 
+![densenetRDM](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/computer%20vison%20embedding/metasema%20image2vec%20RDM%20(densenet121%2Clight).png)
+
 ### MobileNet_V2
 ```
 @article{howard2017mobilenets,
@@ -147,3 +151,5 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 ![ar](https://yinguobing.com/content/images/2018/03/mobilenet-v2-conv.jpg)
 
 [source: Guobing, blog, 15 March, 2018](https://yinguobing.com/bottlenecks-block-in-mobilenetv2/)
+
+![mobilenetRDM](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/computer%20vison%20embedding/metasema%20image2vec%20RDM%20(mobilenetv2_1.00_128%2Clight).png)
