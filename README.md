@@ -25,6 +25,13 @@ scores = results["test_score"]
 ```
 
 ## [Word Embedding Models](https://github.com/dccuchile/spanish-word-embeddings)
+```
+# for example, load fast test model in memory
+fasttext_link: http://dcc.uchile.cl/~jperez/word-embeddings/fasttext-sbwc.vec.gz
+fasttest_model = gensim.models.keyedvectors.KeyedVectors.load_word2vec_format(fasttext_downloaded_file_name)
+for word in words:
+    word_vector_representation = fasttest_model.get_vector(word)
+```
 ![wordembedding](https://cdn-images-1.medium.com/max/800/1*ZNdGa-lpYoZhvSFIcRaewg.png)
 Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahire/introduction-to-word-vectors-ea1d4e4b84bf))
 ### [FastText](https://fasttext.cc/docs/en/crawl-vectors.html), now supports 157 languages
