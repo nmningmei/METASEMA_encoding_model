@@ -153,3 +153,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 [source: Guobing, blog, 15 March, 2018](https://yinguobing.com/bottlenecks-block-in-mobilenetv2/)
 
 ![mobilenetRDM](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/computer%20vison%20embedding/metasema%20image2vec%20RDM%20(mobilenetv2_1.00_128%2Clight).png)
+
+## Results
+### Average Variance Explained
+![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/mean%20variance%20explained%20(%20Ridge%20Regression%20light).png)
