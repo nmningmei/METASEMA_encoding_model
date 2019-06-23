@@ -101,9 +101,11 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 2. well-generalisible feature representations
 
 ![vgg19](http://www.eneuro.org/content/eneuro/4/3/ENEURO.0113-17.2017/F10.large.jpg)
+
 [source: Kalfas et al., 2017](http://www.eneuro.org/content/4/3/ENEURO.0113-17.2017)
 
 ![vgg19ar](https://cdn-images-1.medium.com/max/1600/1*cufAO77aeSWdShs3ba5ndg.jpeg)
+
 [source: Yang et al., 2018](https://www.researchgate.net/publication/325137356_Breast_cancer_screening_using_convolutional_neural_network_and_follow-up_digital_mammography)
 
 ### DenseNet121
@@ -120,9 +122,11 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 2. The error signal can be easily propagated to earlier layers more directly. This is a kind of implicit deep supervision as earlier layers can get direct supervision from the final classification layer.
 3. DenseNet performs well when training data is insufficient
 ![concat](https://cdn-images-1.medium.com/max/800/1*9ysRPSExk0KvXR0AhNnlAA.gif)
+
 [source: Tsang, blog Nov 25, 2018](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
 
 ![feature_map](https://cdn-images-1.medium.com/max/800/1*t_orlp67H-odvgMa4LTzzw.png)
+
 [source: Tsang, blog Nov 25, 2018](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
 
 ### MobileNet_V2
@@ -137,7 +141,9 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 1. bottle net feature bottle net
 2. mobile-oriented design
 ![bottlenet](https://machinethink.net/images/mobilenet-v2/ResidualBlock@2x.png)
+
 [source: Hollemans, blog, 22 April, 2018](https://machinethink.net/blog/mobilenet-v2/)
 
 ![ar](https://yinguobing.com/content/images/2018/03/mobilenet-v2-conv.jpg)
+
 [source: Guobing, blog, 15 March, 2018](https://yinguobing.com/bottlenecks-block-in-mobilenetv2/)
