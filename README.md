@@ -23,6 +23,15 @@ scorer = make_scorer(r2_score,multioutput = "raw_values")
 results = cross_validate(clf,X,y,cv = cv, scoring = scorer,)
 scores = results["test_score"]
 ```
+## Computing RDM
+```
+feature_representations # n_word x n_features
+# subtract the mean of each "word" but not standardize it, or normalize each row to its unit vector form.
+RDM = distance.squareform(distance.pdist(feature_representations - feature_representations.mean(1).reshape(-1,1),
+                           metric = 'cosine',))
+# fill NaNs for plotting
+np.fill_diagonal(RDM,np.nan)
+```
 
 ## [Word Embedding Models](https://github.com/dccuchile/spanish-word-embeddings)
 ```
