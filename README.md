@@ -35,6 +35,17 @@ for word in words:
 ![wordembedding](https://cdn-images-1.medium.com/max/800/1*ZNdGa-lpYoZhvSFIcRaewg.png)
 Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahire/introduction-to-word-vectors-ea1d4e4b84bf))
 ### [FastText](https://fasttext.cc/docs/en/crawl-vectors.html), now supports 157 languages
+```
+@Article{bojanowski2016a,
+  title={Enriching word vectors with subword information},
+  author={Bojanowski, Piotr and Grave, Edouard and Joulin, Armand and Mikolov, Tomas},
+  journal={Transactions of the Association for Computational Linguistics},
+  volume={5},
+  pages={135--146},
+  year={2017},
+  publisher={MIT Press}
+}
+```
 1. Facebook AI Research lab
 2. efficient learning for text classification
 3. hierarchical classifier
@@ -44,13 +55,31 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 ![fasttextmetasema](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/word%20embedding/model%20fast%20text-RSA.png)
 
 ### [GloVe](https://nlp.stanford.edu/projects/glove/)
+```
+@CONFERENCE{Pennnigton2014a,
+  title={Glove: Global vectors for word representation},
+  author={Pennington, Jeffrey and Socher, Richard and Manning, Christopher},
+  booktitle={Proceedings of the 2014 conference on empirical methods in natural language processing (\uppercase{EMNLP})},
+  pages={1532--1543},
+  year={2014}
+}
+```
 1. Stanford
 2. nearest neighbors
 3. linear substructures
 4. non-zero entries of a global word-word co-occurrence matrix
 ![glovemetasema](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/word%20embedding/model%20glove-RSA.png)
 
-### [Word2Vec](https://www.tensorflow.org/tutorials/representation/word2vec)
+### [Word2Vec - the 2013 paper](https://www.tensorflow.org/tutorials/representation/word2vec)
+```
+@inproceedings{mikolov2013a,
+  title={Distributed representations of words and phrases and their compositionality},
+  author={Mikolov, Tomas and Sutskever, Ilya and Chen, Kai and Corrado, Greg S and Dean, Jeff},
+  booktitle={Advances in neural information processing systems},
+  pages={3111--3119},
+  year={2013}
+}
+```
 1. skip-gram model with negative-sampling
 2. minimum word frequency is 5
 3. negative sampling at 20
@@ -60,7 +89,34 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 ## [Computer Vision Models](https://keras.io/applications/)
 
 ### VGG19
+```
+@article{simonyan2014very,
+  title={Very deep convolutional networks for large-scale image recognition},
+  author={Simonyan, Karen and Zisserman, Andrew},
+  journal={arXiv preprint arXiv:1409.1556},
+  year={2014}
+}
+```
+![vgg19](http://www.eneuro.org/content/eneuro/4/3/ENEURO.0113-17.2017/F10.large.jpg)
+![vgg19ar](https://cdn-images-1.medium.com/max/1600/1*cufAO77aeSWdShs3ba5ndg.jpeg)
 
 ### DenseNet121
+```
+@inproceedings{huang2017densely,
+  title={Densely connected convolutional networks},
+  author={Huang, Gao and Liu, Zhuang and Van Der Maaten, Laurens and Weinberger, Kilian Q},
+  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
+  pages={4700--4708},
+  year={2017}
+}
+```
 
 ### MobileNet_V2
+```
+@article{howard2017mobilenets,
+  title={Mobilenets: Efficient convolutional neural networks for mobile vision applications},
+  author={Howard, Andrew G and Zhu, Menglong and Chen, Bo and Kalenichenko, Dmitry and Wang, Weijun and Weyand, Tobias and Andreetto, Marco and Adam, Hartwig},
+  journal={arXiv preprint arXiv:1704.04861},
+  year={2017}
+}
+```
