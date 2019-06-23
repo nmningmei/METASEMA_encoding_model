@@ -34,6 +34,11 @@ np.fill_diagonal(RDM,np.nan)
 ```
 
 ## [Word Embedding Models](https://github.com/dccuchile/spanish-word-embeddings)
+
+![basic](https://jaxenter.com/wp-content/uploads/2018/08/image-2-768x632.png)
+
+[source: Tommaso Teofili August 17, 2018](https://jaxenter.com/deep-learning-search-word2vec-147782.html)
+
 ```
 # for example, load fast test model in memory
 fasttext_link: http://dcc.uchile.cl/~jperez/word-embeddings/fasttext-sbwc.vec.gz
