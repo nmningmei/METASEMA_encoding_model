@@ -175,7 +175,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 [source: Guobing, blog, 15 March, 2018](https://yinguobing.com/bottlenecks-block-in-mobilenetv2/)
 
-![mobilenetRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20(img2vec%20(mobilenetv2_1).png)
+![mobilenetRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20%28img2vec%20%28mobilenetv2_1%29.png)
 
 ## Results
 ### Average Variance Explained
