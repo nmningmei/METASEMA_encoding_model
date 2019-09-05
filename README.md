@@ -68,7 +68,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 6. ngrams
 7. **represntational space = 300**
 ![fasttextmetasema](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/word%20embedding/model%20fast%20text-RSA.png)
-
+![fasttextRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20(fast%20text).png)
 ### [GloVe](https://nlp.stanford.edu/projects/glove/)
 ```
 @CONFERENCE{Pennnigton2014a,
@@ -85,6 +85,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 4. non-zero entries of a global word-word co-occurrence matrix
 5. **representational space = 300**
 ![glovemetasema](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/word%20embedding/model%20glove-RSA.png)
+![gloveRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20(glove).png)
 
 ### [Word2Vec - the 2013 paper](https://www.tensorflow.org/tutorials/representation/word2vec)
 ```
@@ -102,6 +103,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 4. 273 most common words were downsampled
 5. **representational space = 300**
 ![w2vmetasema](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/word%20embedding/model%20word2vec-RSA.png)
+![w2vRMD](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20(word2vec).png)
 
 ## [Computer Vision Models](https://keras.io/applications/)
 
@@ -126,7 +128,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 [source: Yang et al., 2018](https://www.researchgate.net/publication/325137356_Breast_cancer_screening_using_convolutional_neural_network_and_follow-up_digital_mammography)
 
-![vgg19RDM](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/computer%20vison%20embedding/metasema%20image2vec%20RDM%20(vgg19%2Clight).png)
+![vgg19RDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20(img2vec%20(vgg19)).png)
 
 ### DenseNet121
 ```
@@ -150,7 +152,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 [source: Tsang, blog Nov 25, 2018](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
 
-![densenetRDM](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/computer%20vison%20embedding/metasema%20image2vec%20RDM%20(densenet121%2Clight).png)
+![densenetRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20(img2vec%20(densenet121)).png)
 
 ### MobileNet_V2
 ```
@@ -173,7 +175,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 [source: Guobing, blog, 15 March, 2018](https://yinguobing.com/bottlenecks-block-in-mobilenetv2/)
 
-![mobilenetRDM](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/computer%20vison%20embedding/metasema%20image2vec%20RDM%20(mobilenetv2_1.00_128%2Clight).png)
+![mobilenetRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20(img2vec%20(mobilenetv2_1).png)
 
 ## Results
 ### Average Variance Explained
