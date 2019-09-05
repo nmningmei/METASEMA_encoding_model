@@ -66,6 +66,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 4. Huffman algorithm to build the tree --> depth of frequent words is smaller than for infrequent ones
 5. bag of words (BOW) -- ignore the word order
 6. ngrams
+7. **represntational space = 300**
 ![fasttextmetasema](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/word%20embedding/model%20fast%20text-RSA.png)
 
 ### [GloVe](https://nlp.stanford.edu/projects/glove/)
@@ -82,6 +83,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 2. nearest neighbors
 3. linear substructures
 4. non-zero entries of a global word-word co-occurrence matrix
+5. **representational space = 300**
 ![glovemetasema](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/word%20embedding/model%20glove-RSA.png)
 
 ### [Word2Vec - the 2013 paper](https://www.tensorflow.org/tutorials/representation/word2vec)
@@ -98,6 +100,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 2. minimum word frequency is 5
 3. negative sampling at 20
 4. 273 most common words were downsampled
+5. **representational space = 300**
 ![w2vmetasema](https://github.com/nmningmei/fMRI_decoding_benchmarking/blob/master/figures/metasema/word%20embedding/model%20word2vec-RSA.png)
 
 ## [Computer Vision Models](https://keras.io/applications/)
@@ -113,6 +116,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 ```
 1. small convolution filters (3 x 3)
 2. well-generalisible feature representations
+3. **representational space = 512**
 
 ![vgg19](http://www.eneuro.org/content/eneuro/4/3/ENEURO.0113-17.2017/F10.large.jpg)
 
@@ -137,6 +141,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 1. Each layer is receiving a “collective knowledge” from all preceding layers
 2. The error signal can be easily propagated to earlier layers more directly. This is a kind of implicit deep supervision as earlier layers can get direct supervision from the final classification layer.
 3. DenseNet performs well when training data is insufficient
+4. **representational space = 1028**
 ![concat](https://cdn-images-1.medium.com/max/800/1*9ysRPSExk0KvXR0AhNnlAA.gif)
 
 [source: Tsang, blog Nov 25, 2018](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
@@ -158,6 +163,8 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 ```
 1. bottle net feature bottle net
 2. mobile-oriented design
+3. **representational space = 1280**
+
 ![bottlenet](https://machinethink.net/images/mobilenet-v2/ResidualBlock@2x.png)
 
 [source: Hollemans, blog, 22 April, 2018](https://machinethink.net/blog/mobilenet-v2/)
@@ -171,5 +178,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 ## Results
 ### Average Variance Explained
 ![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig1.png)
+### Difference between Computer Vision models and Word Embedding modles
 ![comparison1](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig1.png)
+### The difference between CV and WE model contrasted between Shallow and Deep Processing conditions
 ![comparison2](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig3.png)
