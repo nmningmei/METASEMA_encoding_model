@@ -170,4 +170,6 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 ## Results
 ### Average Variance Explained
-![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/mean%20variance%20explained%20(%20Ridge%20Regression%20light).png)
+![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig1.png)
+![comparison1](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig1.png)
+![comparison2](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig3.png)
