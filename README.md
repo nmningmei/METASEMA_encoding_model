@@ -152,7 +152,7 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 [source: Tsang, blog Nov 25, 2018](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
 
-![densenetRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20(img2vec%20(densenet121)).png)
+![densenetRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20%28img2vec%20%28densenet121%29%29.png)
 
 ### MobileNet_V2
 ```
