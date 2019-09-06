@@ -17,31 +17,23 @@ import utils
 from glob                                          import glob
 from tqdm                                          import tqdm
 from mvpa2.mappers.fx                              import mean_group_sample
-from sklearn                                       import linear_model
-#from sklearn.metrics                               import r2_score
+from sklearn.linear_model                          import Ridge
+from sklearn.metrics                               import r2_score
 from sklearn.feature_selection                     import VarianceThreshold
 from sklearn.preprocessing                         import StandardScaler
 #from sklearn.pipeline                              import make_pipeline
-from sklearn.utils                                 import shuffle
 
 
 ## parameters
 experiment              = 'metasema'
-working_dir             = '../../../../{}/preprocessed_with_invariant/'.format(experiment) # where the data locates
-here                    = '7 rois word2vec'
+working_dir             = '../../../../{}/preprocessed_uncombined_with_invariant/'.format(experiment) # where the data locates
+here                    = '15 rois word2vec'
 saving_dir              = '../results/{}/RP/{}'.format(experiment,here) # where the outputs will go
 if not os.path.exists(saving_dir):
     os.makedirs(saving_dir)
 word2vec_dir            = '../results/{}/RP/word2vec features'.format(experiment)
 label_map               = dict(animal  =[1,0],
                                tool    =[0,1])
-rois                    = {1:'IPL',
-                           2:'LTL',
-                           3:'FFG & PHG', 
-                           4:'dmPFC',
-                           5:'IFG', 
-                           6:'vmPFC',
-                           7:'PCG & Precun'}
 sub                     = '*'# star means all subjects
 average                 = False # averaging the trainig data
 transfer                = False # do I do domain adaptation
@@ -49,9 +41,11 @@ print_train             = False # do I want to see the training process
 concatenate             = False # specifically for domain adaptation
 n_splits                = 100 # number of cross validation
 
+
 # get the data file names
-working_data            = glob(os.path.join(working_dir,'%s/roi*.pkl'%sub))
-working_data = shuffle(working_data)
+working_data            = glob(os.path.join(working_dir,'%s/*.pkl'%sub))
+from sklearn.utils import shuffle
+wording_data            = shuffle(working_data)
 # load word2vec features
 word2vec_vecs           = [pickle.load(open(f,'rb')) for f in glob(os.path.join(word2vec_dir,'*.p'))]
 word2vec_names          = ['Fast_Text','Glove','Word2Vec']
@@ -60,9 +54,8 @@ word2vec_names          = ['Fast_Text','Glove','Word2Vec']
 # set random state
 np.random.seed(12345)
 for subject in working_data:
-    sub_name            = subject.split('/')[-2]
-    n_roi               = int(re.findall('\d+',subject.split('/')[-1].split('.')[0])[0])
-    roi_name            = rois[n_roi]
+    sub_name             = subject.split('/')[-2]
+    roi_name             = subject.split('/')[-1].split('.')[0]
     # disable garbage collection to speed up pickle
     gc.disable()
     with open(subject,'rb') as F:
@@ -71,8 +64,6 @@ for subject in working_data:
     gc.enable();print('dataset loaded')
     output_dir          = sub_name
     for condition in ['read','reenact']:
-        dataset                 = dataset_[dataset_.sa.context == condition]# select one of the two conditions
-        BOLD                    = dataset.samples.astype('float32')
         results = dict(
                     sub                 =[],
                     roi                 =[],
@@ -115,28 +106,32 @@ for subject in working_data:
                         tr = dataset[idx_train]
                     te = dataset[idx_test].get_mapped(mean_group_sample(['chunks', 'id'],order = 'occurrence'))
                     
+    #                scaler          = utils.build_model_dictionary(n_jobs=4)['RandomForest + Linear-SVM']
+    #                scaler.steps.pop(-1)
+                    
+                    
                     features_tr     = np.array([word2vec_features[word.lower()] for word in tr.sa.words])
                     BOLD_tr         = tr.samples.astype('float32')
+    #                label_tr        = np.array([label_map[item] for item in tr.sa.targets])
                     features_te     = np.array([word2vec_features[word.lower()] for word in te.sa.words])
                     BOLD_te         = te.samples.astype('float32')
                     
-                    clf             = linear_model.Ridge(
-                                            alpha                       = 1e2,          # L2 penalty, higher means more weights are constrained to zero
+                    BOLD_tr                 = variance_threshold.transform(BOLD_tr)
+    #                BOLD_tr                 = scaler.fit_transform(BOLD_tr,label_tr[:,-1])
+                    BOLD_tr                 = scaler.transform(BOLD_tr)
+                    BOLD_te                 = variance_threshold.transform(BOLD_te)
+                    BOLD_te                 = scaler.transform(BOLD_te)
+                    
+                    clf             = Ridge(alpha                       = 1e2,          # L2 penalty, higher means more weights are constrained to zero
                                             normalize                   = True,         # normalize the batch features
-                                            random_state                = 12345,        # random seeding
+                                            random_state                = 12345,         # random seeding
                                             )
-                    r_squares,scores,pipeline = utils.regression_CV(
-                                    BOLD_tr,
-                                    BOLD_te,
-                                    features_tr,
-                                    features_te,
-                                    clf,
-                                    r_squares,
-                                    scores,
-                                    scaler = None,
-                                    variance_threshold = None,
-                                    print_train = False,
-                                    )
+#                    clf             = make_pipeline(MinMaxScaler(),clf)
+                    clf.fit(features_tr,BOLD_tr)
+                    preds                   = clf.predict(features_te)
+                    r_squares.append(1 - np.sum((BOLD_te - preds)**2) / np.sum(BOLD_te**2))
+                    scores.append(r2_score(BOLD_te,preds,multioutput='raw_values'))
+#                    print(np.sum(scores[-1] > 0))
                 cut_score = np.mean(scores,0)
                 cut_score[cut_score < 0] = 0
                 results['sub'               ].append(sub_name)
@@ -152,21 +147,19 @@ for subject in working_data:
                 results['positive_values'   ].append(np.sum(cut_score > 0 ))
                 results['determination'     ].append(np.mean(r_squares))
                 try:
-                    print('{},{},{},{},\n with {} voxels: {},{}'.format(
+                    print('{},{},{},{},{},{}'.format(
                             sub_name,
                             roi_name,
                             condition,
                             word2vec_name,
-                            results['positive_values'][-1],
                             np.mean(cut_score[cut_score > 0]),
                             np.max(cut_score[cut_score > 0])))
                 except:
-                    print('{},{},{},{},\n with {} voxels: {},{}'.format(
+                    print('{},{},{},{},{},{}'.format(
                             sub_name,
                             roi_name,
                             condition,
                             word2vec_name,
-                            0,
                             0,
                             0))
             results = pd.DataFrame(results)
