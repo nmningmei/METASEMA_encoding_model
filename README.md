@@ -1,26 +1,34 @@
 # Encoding model on fMRI data of word cognition tasks
 
 ## METASEMA dataset
+ - words: Spanish, 18 living words (i.e. cat, dog etc) and 18 nonliving words (i.e. mirror, knife etc)
+ - task: read (shallow processing) or think of related features (deep processing)
+ - 3T MRI
+ - 27 subjects
+ - 15 ROIs
 
 ## Goals
+
 - [x] cross-validate standard encoding models using features extracted by word embedding models and computer vision models
 - [x] compare the model performance among models use different features extracted by different word embedding models and computer vision models
 
 ## Encoding Model Pipeline
+
 ```
 clf             = linear_model.Ridge(
-                  alpha        = 1e2,  # L2 penalty, higher means lower the sum of the weights
-                  normalize    = True, # normalize the batch features
-                  random_state = 12345,# random seeding
+                  alpha        = 1e2,  # L2 penalty, higher means more regularization
+                  normalize    = True, # normalize within each batch of feeding of the input data
+                  random_state = 12345,# random seeding for reproducibility
 )
-X # feature representation matrix
-y # BOLD signals
+X # feature representation matrix (n_samples x n_features)
+y # BOLD signals                  (n_samples x n_voxels)
 cv # cross validation method (indices)
 
 scorer = make_scorer(r2_score,multioutput = "raw_values")
 
-results = cross_validate(clf,X,y,cv = cv, scoring = scorer,)
+results = cross_validate(clf,X,y,cv = cv, scoring = scorer,) # need to write a customized for-loop for cross validation due to the specify requirement of the scorer
 scores = results["test_score"]
+
 ```
 ## Computing RDM
 ```
@@ -32,7 +40,7 @@ RDM = distance.squareform(distance.pdist(feature_representations - feature_repre
 np.fill_diagonal(RDM,np.nan)
 ```
 
-## [Word Embedding Models](https://github.com/dccuchile/spanish-word-embeddings)
+## [Word Embedding Models in Spanish](https://github.com/dccuchile/spanish-word-embeddings)
 
 ![basic](https://jaxenter.com/wp-content/uploads/2018/08/image-2-768x632.png)
 
@@ -47,6 +55,7 @@ for word in words:
 ```
 ![wordembedding](https://cdn-images-1.medium.com/max/800/1*ZNdGa-lpYoZhvSFIcRaewg.png)
 Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahire/introduction-to-word-vectors-ea1d4e4b84bf))
+
 ### [FastText](https://fasttext.cc/docs/en/crawl-vectors.html), now supports 157 languages
 ```
 @Article{bojanowski2016a,
@@ -180,7 +189,9 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 ## Results
 ### Average Variance Explained
 ![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig5.png)
+
 ### Difference between Computer Vision models and Word Embedding modles
 ![comparison1](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig6.png)
+
 ### The difference between CV and WE model contrasted between Shallow and Deep Processing conditions
 ![comparison2](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig7.png)
