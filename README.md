@@ -1,10 +1,5 @@
 # Encoding model on fMRI data of word cognition tasks
 
-![bcbl](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/scripts/CCN_202019_encoding_model_poster/bcbl.jpeg)
-
-![ccn](https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiVoo3f18PkAhVixYUKHdFWCewQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.nature.com%2Farticles%2Fs41593-018-0210-5&psig=AOvVaw1BORsRtpM-bD5NjaklVL2I&ust=1568116608992528)
-
-
 ## METASEMA dataset
 
 ## Goals
