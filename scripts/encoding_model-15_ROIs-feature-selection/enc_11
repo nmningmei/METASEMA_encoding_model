@@ -1,0 +1,15 @@
+
+#!/bin/bash
+#PBS -q bcbl
+#PBS -l nodes=1:ppn=24
+#PBS -l mem=120gb
+#PBS -l cput=288:00:00
+#PBS -N msen15f11
+#PBS -M nmei@bcbl.eu
+#PBS -o test_run/out_5505.txt
+#PBS -e test_run/err_5505.txt
+cd $PBS_O_WORKDIR
+export PATH="/scratch/ningmei/anaconda3/bin:$PATH"
+pwd
+
+python "encoding model 15 ROIs DIPC 11.py"

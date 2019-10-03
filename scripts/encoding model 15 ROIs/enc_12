@@ -1,0 +1,17 @@
+
+#!/bin/bash
+
+# This is a script to send encoding model 15 ROIs ips 12.py as a batch job.
+# it works on subject 5593
+
+#$ -cwd
+#$ -o test_run/out_12.txt
+#$ -e test_run/err_12.txt
+#$ -m be
+#$ -q fsl.q
+#$ -M nmei@bcbl.eu
+#$ -N "msen15_12"
+#$ -S /bin/bash
+
+module load rocks-python-3.6
+python "encoding model 15 ROIs ips 12.py"

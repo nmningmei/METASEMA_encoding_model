@@ -1,0 +1,181 @@
+pymvpa is not installed
+fast text MV = 0.0132,AIC = 20.07,CP = 7.70
+glove MV = 0.0128,AIC = 20.14,CP = 7.71
+word2vec MV = 0.0128,AIC = 20.15,CP = 7.71
+VGG19 MV = 0.0194,AIC = 20.38,CP = 8.78
+DenseNet169 MV = 0.0400,AIC = 21.29,CP = 11.15
+MobileNetV2 MV = 0.0335,AIC = 21.12,CP = 10.62
+fast text MV = 0.0105,AIC = 20.55,CP = 7.71
+glove MV = 0.0101,AIC = 20.61,CP = 7.71
+word2vec MV = 0.0102,AIC = 20.60,CP = 7.71
+VGG19 MV = 0.0150,AIC = 20.90,CP = 8.79
+DenseNet169 MV = 0.0327,AIC = 21.69,CP = 11.17
+MobileNetV2 MV = 0.0282,AIC = 21.47,CP = 10.64
+fast text MV = 0.0126,AIC = 20.17,CP = 7.71
+glove MV = 0.0118,AIC = 20.29,CP = 7.71
+word2vec MV = 0.0119,AIC = 20.28,CP = 7.71
+VGG19 MV = 0.0189,AIC = 20.43,CP = 8.78
+DenseNet169 MV = 0.0364,AIC = 21.46,CP = 11.16
+MobileNetV2 MV = 0.0327,AIC = 21.16,CP = 10.63
+fast text MV = 0.0107,AIC = 20.49,CP = 7.71
+glove MV = 0.0105,AIC = 20.54,CP = 7.71
+word2vec MV = 0.0106,AIC = 20.51,CP = 7.71
+VGG19 MV = 0.0155,AIC = 20.81,CP = 8.79
+DenseNet169 MV = 0.0322,AIC = 21.71,CP = 11.17
+MobileNetV2 MV = 0.0285,AIC = 21.43,CP = 10.63
+fast text MV = 0.0125,AIC = 20.19,CP = 7.71
+glove MV = 0.0118,AIC = 20.30,CP = 7.71
+word2vec MV = 0.0129,AIC = 20.12,CP = 7.71
+VGG19 MV = 0.0169,AIC = 20.65,CP = 8.79
+DenseNet169 MV = 0.0362,AIC = 21.48,CP = 11.16
+MobileNetV2 MV = 0.0321,AIC = 21.19,CP = 10.63
+fast text MV = 0.0103,AIC = 20.57,CP = 7.71
+glove MV = 0.0103,AIC = 20.57,CP = 7.71
+word2vec MV = 0.0101,AIC = 20.61,CP = 7.71
+VGG19 MV = 0.0154,AIC = 20.84,CP = 8.78
+DenseNet169 MV = 0.0341,AIC = 21.61,CP = 11.16
+MobileNetV2 MV = 0.0300,AIC = 21.34,CP = 10.63
+fast text MV = 0.0116,AIC = 20.33,CP = 7.71
+glove MV = 0.0114,AIC = 20.36,CP = 7.71
+word2vec MV = 0.0117,AIC = 20.31,CP = 7.71
+VGG19 MV = 0.0183,AIC = 20.49,CP = 8.78
+DenseNet169 MV = 0.0366,AIC = 21.46,CP = 11.17
+MobileNetV2 MV = 0.0327,AIC = 21.16,CP = 10.63
+fast text MV = 0.0108,AIC = 20.48,CP = 7.71
+glove MV = 0.0106,AIC = 20.52,CP = 7.71
+word2vec MV = 0.0106,AIC = 20.51,CP = 7.71
+VGG19 MV = 0.0156,AIC = 20.81,CP = 8.78
+DenseNet169 MV = 0.0321,AIC = 21.72,CP = 11.16
+MobileNetV2 MV = 0.0288,AIC = 21.41,CP = 10.63
+fast text MV = 0.0126,AIC = 20.17,CP = 7.71
+glove MV = 0.0123,AIC = 20.22,CP = 7.71
+word2vec MV = 0.0123,AIC = 20.22,CP = 7.71
+VGG19 MV = 0.0195,AIC = 20.36,CP = 8.78
+DenseNet169 MV = 0.0381,AIC = 21.38,CP = 11.16
+MobileNetV2 MV = 0.0342,AIC = 21.07,CP = 10.63
+fast text MV = 0.0114,AIC = 20.37,CP = 7.71
+glove MV = 0.0110,AIC = 20.44,CP = 7.71
+word2vec MV = 0.0114,AIC = 20.37,CP = 7.71
+VGG19 MV = 0.0176,AIC = 20.57,CP = 8.78
+DenseNet169 MV = 0.0344,AIC = 21.59,CP = 11.17
+MobileNetV2 MV = 0.0304,AIC = 21.31,CP = 10.63
+fast text MV = 0.0120,AIC = 20.27,CP = 7.71
+glove MV = 0.0117,AIC = 20.31,CP = 7.71
+word2vec MV = 0.0119,AIC = 20.28,CP = 7.71
+VGG19 MV = 0.0183,AIC = 20.48,CP = 8.78
+DenseNet169 MV = 0.0376,AIC = 21.40,CP = 11.16
+MobileNetV2 MV = 0.0327,AIC = 21.16,CP = 10.63
+fast text MV = 0.0106,AIC = 20.52,CP = 7.71
+glove MV = 0.0101,AIC = 20.61,CP = 7.71
+word2vec MV = 0.0105,AIC = 20.54,CP = 7.71
+VGG19 MV = 0.0151,AIC = 20.88,CP = 8.78
+DenseNet169 MV = 0.0310,AIC = 21.80,CP = 11.17
+MobileNetV2 MV = 0.0275,AIC = 21.51,CP = 10.63
+fast text MV = 0.0123,AIC = 20.21,CP = 7.71
+glove MV = 0.0117,AIC = 20.32,CP = 7.71
+word2vec MV = 0.0125,AIC = 20.18,CP = 7.71
+VGG19 MV = 0.0173,AIC = 20.59,CP = 8.78
+DenseNet169 MV = 0.0366,AIC = 21.45,CP = 11.16
+MobileNetV2 MV = 0.0336,AIC = 21.10,CP = 10.63
+fast text MV = 0.0109,AIC = 20.47,CP = 7.71
+glove MV = 0.0108,AIC = 20.48,CP = 7.71
+word2vec MV = 0.0109,AIC = 20.46,CP = 7.71
+VGG19 MV = 0.0159,AIC = 20.78,CP = 8.78
+DenseNet169 MV = 0.0322,AIC = 21.72,CP = 11.17
+MobileNetV2 MV = 0.0297,AIC = 21.36,CP = 10.63
+fast text MV = 0.0127,AIC = 20.15,CP = 7.71
+glove MV = 0.0123,AIC = 20.22,CP = 7.71
+word2vec MV = 0.0130,AIC = 20.11,CP = 7.71
+VGG19 MV = 0.0177,AIC = 20.56,CP = 8.78
+DenseNet169 MV = 0.0355,AIC = 21.52,CP = 11.16
+MobileNetV2 MV = 0.0322,AIC = 21.20,CP = 10.63
+fast text MV = 0.0112,AIC = 20.40,CP = 7.71
+glove MV = 0.0110,AIC = 20.45,CP = 7.71
+word2vec MV = 0.0111,AIC = 20.42,CP = 7.71
+VGG19 MV = 0.0192,AIC = 20.41,CP = 8.78
+DenseNet169 MV = 0.0340,AIC = 21.62,CP = 11.17
+MobileNetV2 MV = 0.0302,AIC = 21.32,CP = 10.63
+fast text MV = 0.0131,AIC = 20.09,CP = 7.71
+glove MV = 0.0129,AIC = 20.12,CP = 7.71
+word2vec MV = 0.0131,AIC = 20.09,CP = 7.71
+VGG19 MV = 0.0200,AIC = 20.32,CP = 8.78
+DenseNet169 MV = 0.0391,AIC = 21.33,CP = 11.16
+MobileNetV2 MV = 0.0358,AIC = 20.99,CP = 10.62
+fast text MV = 0.0109,AIC = 20.47,CP = 7.71
+glove MV = 0.0109,AIC = 20.46,CP = 7.71
+word2vec MV = 0.0110,AIC = 20.45,CP = 7.71
+VGG19 MV = 0.0169,AIC = 20.66,CP = 8.78
+DenseNet169 MV = 0.0335,AIC = 21.65,CP = 11.17
+MobileNetV2 MV = 0.0303,AIC = 21.32,CP = 10.63
+fast text MV = 0.0131,AIC = 20.09,CP = 7.71
+glove MV = 0.0130,AIC = 20.11,CP = 7.71
+word2vec MV = 0.0130,AIC = 20.11,CP = 7.71
+VGG19 MV = 0.0203,AIC = 20.29,CP = 8.78
+DenseNet169 MV = 0.0382,AIC = 21.38,CP = 11.15
+MobileNetV2 MV = 0.0342,AIC = 21.07,CP = 10.62
+fast text MV = 0.0125,AIC = 20.19,CP = 7.71
+glove MV = 0.0118,AIC = 20.30,CP = 7.71
+word2vec MV = 0.0125,AIC = 20.19,CP = 7.71
+VGG19 MV = 0.0186,AIC = 20.48,CP = 8.78
+DenseNet169 MV = 0.0351,AIC = 21.56,CP = 11.16
+MobileNetV2 MV = 0.0318,AIC = 21.23,CP = 10.63
+fast text MV = 0.0120,AIC = 20.26,CP = 7.71
+glove MV = 0.0117,AIC = 20.31,CP = 7.71
+word2vec MV = 0.0117,AIC = 20.31,CP = 7.71
+VGG19 MV = 0.0184,AIC = 20.47,CP = 8.78
+DenseNet169 MV = 0.0379,AIC = 21.39,CP = 11.16
+MobileNetV2 MV = 0.0341,AIC = 21.07,CP = 10.62
+fast text MV = 0.0106,AIC = 20.51,CP = 7.71
+glove MV = 0.0102,AIC = 20.58,CP = 7.71
+word2vec MV = 0.0109,AIC = 20.46,CP = 7.71
+VGG19 MV = 0.0157,AIC = 20.79,CP = 8.78
+DenseNet169 MV = 0.0325,AIC = 21.69,CP = 11.17
+MobileNetV2 MV = 0.0292,AIC = 21.38,CP = 10.64
+fast text MV = 0.0125,AIC = 20.19,CP = 7.71
+glove MV = 0.0124,AIC = 20.20,CP = 7.71
+word2vec MV = 0.0124,AIC = 20.19,CP = 7.71
+VGG19 MV = 0.0172,AIC = 20.61,CP = 8.78
+DenseNet169 MV = 0.0361,AIC = 21.49,CP = 11.16
+MobileNetV2 MV = 0.0319,AIC = 21.21,CP = 10.62
+fast text MV = 0.0114,AIC = 20.37,CP = 7.71
+glove MV = 0.0103,AIC = 20.58,CP = 7.72
+word2vec MV = 0.0112,AIC = 20.40,CP = 7.71
+VGG19 MV = 0.0156,AIC = 20.81,CP = 8.79
+DenseNet169 MV = 0.0307,AIC = 21.81,CP = 11.18
+MobileNetV2 MV = 0.0270,AIC = 21.54,CP = 10.64
+fast text MV = 0.0122,AIC = 20.24,CP = 7.71
+glove MV = 0.0119,AIC = 20.29,CP = 7.71
+word2vec MV = 0.0121,AIC = 20.24,CP = 7.71
+VGG19 MV = 0.0170,AIC = 20.64,CP = 8.78
+DenseNet169 MV = 0.0367,AIC = 21.46,CP = 11.16
+MobileNetV2 MV = 0.0339,AIC = 21.10,CP = 10.62
+fast text MV = 0.0101,AIC = 20.62,CP = 7.72
+glove MV = 0.0093,AIC = 20.78,CP = 7.72
+word2vec MV = 0.0100,AIC = 20.64,CP = 7.72
+VGG19 MV = 0.0140,AIC = 21.03,CP = 8.79
+DenseNet169 MV = 0.0302,AIC = 21.85,CP = 11.18
+MobileNetV2 MV = 0.0265,AIC = 21.58,CP = 10.65
+fast text MV = 0.0119,AIC = 20.28,CP = 7.71
+glove MV = 0.0118,AIC = 20.30,CP = 7.71
+word2vec MV = 0.0118,AIC = 20.30,CP = 7.71
+VGG19 MV = 0.0182,AIC = 20.50,CP = 8.78
+DenseNet169 MV = 0.0355,AIC = 21.52,CP = 11.16
+MobileNetV2 MV = 0.0315,AIC = 21.24,CP = 10.63
+fast text MV = 0.0120,AIC = 20.26,CP = 7.71
+glove MV = 0.0116,AIC = 20.33,CP = 7.71
+word2vec MV = 0.0118,AIC = 20.29,CP = 7.71
+VGG19 MV = 0.0175,AIC = 20.58,CP = 8.79
+DenseNet169 MV = 0.0339,AIC = 21.61,CP = 11.17
+MobileNetV2 MV = 0.0306,AIC = 21.29,CP = 10.63
+fast text MV = 0.0124,AIC = 20.19,CP = 7.71
+glove MV = 0.0120,AIC = 20.26,CP = 7.71
+word2vec MV = 0.0120,AIC = 20.26,CP = 7.71
+VGG19 MV = 0.0193,AIC = 20.38,CP = 8.78
+DenseNet169 MV = 0.0402,AIC = 21.27,CP = 11.16
+MobileNetV2 MV = 0.0353,AIC = 21.00,CP = 10.63
+fast text MV = 0.0110,AIC = 20.45,CP = 7.71
+glove MV = 0.0105,AIC = 20.53,CP = 7.71
+word2vec MV = 0.0109,AIC = 20.46,CP = 7.71
+VGG19 MV = 0.0146,AIC = 20.95,CP = 8.78
+DenseNet169 MV = 0.0300,AIC = 21.86,CP = 11.17
+MobileNetV2 MV = 0.0266,AIC = 21.58,CP = 10.63

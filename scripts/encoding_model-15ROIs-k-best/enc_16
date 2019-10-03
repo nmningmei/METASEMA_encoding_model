@@ -1,0 +1,15 @@
+
+#!/bin/bash
+#PBS -q bcbl
+#PBS -l nodes=1:ppn=20
+#PBS -l mem=100gb
+#PBS -l cput=240:00:00
+#PBS -N msen15k16
+#PBS -M nmei@bcbl.eu
+#PBS -o test_run/out_6032.txt
+#PBS -e test_run/err_6032.txt
+cd $PBS_O_WORKDIR
+export PATH="/scratch/ningmei/anaconda3/bin:$PATH"
+pwd
+
+python "variance_explained_as_function_of_k_best_DIPC_16.py"
