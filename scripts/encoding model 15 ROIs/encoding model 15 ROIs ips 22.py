@@ -21,7 +21,11 @@ from tqdm import tqdm
 from sklearn.utils           import shuffle
 from sklearn.model_selection import cross_validate
 from sklearn                 import metrics,linear_model
-from collections             import defaultdict
+from collections             import OrderedDict
+# import warnings filter
+from warnings import simplefilter
+# ignore all future warnings
+simplefilter(action='ignore', category=FutureWarning)
 
 def AIC(y_true,y_pred,n_features):
     VE = metrics.r2_score(y_true,y_pred,multioutput='raw_values')
@@ -59,7 +63,9 @@ here                    = 'encoding_model_15_ROIs'
 saving_dir              = '../../../../results/{}/RP/{}'.format(experiment,here) # where the outputs will go
 if not os.path.exists(saving_dir):
     os.mkdir(saving_dir)
-
+array_dir               = '../../../../results/{}/RP/encoding_model_15_ROIs_arrays'.format(experiment)
+if not os.path.exists(array_dir):
+    os.mkdir(array_dir)
 image2vec_dir           = '../../../../results/{}/img2vec_features'.format(experiment)
 word2vec_dir            = '../../../../results/{}/word2vec_features'.format(experiment)
 
@@ -181,6 +187,8 @@ for fmri,csv in zip(working_fmri,working_data):
                 bic             = np.array([BIC(BOLD[idx_test],y_pred,n_coef,n_obs) for idx_test,y_pred in zip(idxs_test,preds)])
                 cp              = np.array([CP(BOLD[idx_test],y_pred,n_coef,n_obs) for idx_test,y_pred in zip(idxs_test,preds)])
                 mean_variance   = np.array([np.mean(temp[temp >= 0]) for temp in scores])
+                corr            = [np.mean([np.corrcoef(a,b).flatten()[1]**2 for a,b in zip(BOLD[idx_test],pred)]) for idx_test,pred in zip(idxs_test,preds)]
+                
                 try:
                     best_variance   = np.array([np.max(temp[temp >= 0]) for temp in scores])
                 except:
@@ -189,7 +197,7 @@ for fmri,csv in zip(working_fmri,working_data):
                 determinant     = np.array([1 - np.sum((BOLD[idx_test] - y_pred)**2) / np.sum((BOLD[idx_test] - BOLD[idx_test].mean(0))**2) for idx_test,y_pred in zip(idxs_test,preds)])
                 print(word2vec_name,f'MV = {mean_variance.mean():.4f},AIC = {aic.mean():.2f},CP = {cp.mean():.2f}')
                 # saving the results
-                results                     = defaultdict()
+                results                     = OrderedDict()
                 results['sub_name'         ]= [sub_name] *          n_splits
                 results['roi_name'         ]= [roi_name] *          n_splits
                 results['model_name'       ]= [word2vec_name] *     n_splits
@@ -204,9 +212,10 @@ for fmri,csv in zip(working_fmri,working_data):
                 results['AICc'             ]= aicc
                 results['BIC'              ]= bic
                 results['CP'               ]= cp
+                results['corr'             ]= corr
                 results_to_save             = pd.DataFrame(results)
                 results_to_save.to_csv(csv_filename,index=False)
-        
+                np.save(os.path.join(array_dir,f'{experiment} {here} {sub_name} {roi_name} {condition} {word2vec_name}.npy'),scores)
         # computer vision
         for img2vec_vec,img2vec_name in zip(image2vec_vecs,image2vec_names):
             csv_filename            = os.path.join(saving_dir,'{} {} {} {} {} {}.csv'.format(
@@ -265,6 +274,7 @@ for fmri,csv in zip(working_fmri,working_data):
                 bic             = np.array([BIC(BOLD[idx_test],y_pred,n_coef,len(idx_test)) for idx_test,y_pred in zip(idxs_test,preds)])
                 cp              = np.array([CP(BOLD[idx_test],y_pred,n_coef,n_obs) for idx_test,y_pred in zip(idxs_test,preds)])
                 mean_variance   = np.array([np.mean(temp[temp >= 0]) for temp in scores])
+                corr            = [np.mean([np.corrcoef(a,b).flatten()[1]**2 for a,b in zip(BOLD[idx_test],pred)]) for idx_test,pred in zip(idxs_test,preds)]
                 try:
                     best_variance   = np.array([np.max(temp[temp >= 0]) for temp in scores])
                 except:
@@ -273,7 +283,7 @@ for fmri,csv in zip(working_fmri,working_data):
                 determinant     = np.array([1 - np.sum((BOLD[idx_test] - y_pred)**2) / np.sum((BOLD[idx_test] - BOLD[idx_test].mean(0))**2) for idx_test,y_pred in zip(idxs_test,preds)])
                 print(img2vec_name,f'MV = {mean_variance.mean():.4f},AIC = {aic.mean():.2f},CP = {cp.mean():.2f}')
                 # saving the results
-                results                     = defaultdict()
+                results                     = OrderedDict()
                 results['sub_name'         ]= [sub_name] *          n_splits
                 results['roi_name'         ]= [roi_name] *          n_splits
                 results['model_name'       ]= [img2vec_name] *     n_splits
@@ -288,9 +298,10 @@ for fmri,csv in zip(working_fmri,working_data):
                 results['AICc'             ]= aicc
                 results['BIC'              ]= bic
                 results['CP'               ]= cp
+                results['corr'             ]= corr
                 results_to_save             = pd.DataFrame(results)
                 results_to_save.to_csv(csv_filename,index=False)
-                
+                np.save(os.path.join(array_dir,f'{experiment} {here} {sub_name} {roi_name} {condition} {img2vec_name}.npy'),scores)
 
 
 

@@ -22,7 +22,7 @@ from matplotlib.ticker import FormatStrFormatter
 
 
 experiment = 'metasema'
-here = 'encoding model 15 ROIs'
+here = 'encoding_model_15_ROIs'
 working_dir = '../../../../results/{}/RP/{}'.format(experiment,here)
 figure_dir = '../../../../figures/{}/RP/{}'.format(experiment,here)
 if not os.path.exists(figure_dir):

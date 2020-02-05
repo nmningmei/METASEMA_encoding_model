@@ -71,7 +71,7 @@ with open('qsub_jobs_en.py','a') as f:
         if ii == 0:
             f.write('os.system("qsub enc_{}")\n'.format(ii+1))
         else:
-            f.write('time.sleep(20 * 60)\nos.system("qsub enc_{}")\n'.format(ii+1))
+            f.write('time.sleep(30)\nos.system("qsub enc_{}")\n'.format(ii+1))
 
 content = '''
 #!/bin/bash
