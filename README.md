@@ -1,5 +1,9 @@
 # Encoding model on fMRI data of word cognition tasks
 
+## Requirement
+- python3.+
+- scikit-learn==0.22.0
+
 ## METASEMA dataset
  - words: Spanish, 18 living words (i.e. cat, dog etc) and 18 nonliving words (i.e. mirror, knife etc)
  - task: read (shallow processing) or think of related features (deep processing)
