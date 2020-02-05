@@ -199,3 +199,9 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 ### The difference between CV and WE model contrasted between Shallow and Deep Processing conditions
 ![comparison2](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/Fig8.png)
+
+### Number of positive voxel explained by the two models
+![positve](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/positive%20voxels%20(high).jpeg)
+
+### Voxel-wise scores by the two models
+![voxelwise](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/voxel%20wise%20scores%20(high).jpeg)
