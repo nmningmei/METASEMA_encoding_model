@@ -192,10 +192,10 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 ## Results
 ### Average Variance Explained
-![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig5.png)
+![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig6.png)
 
 ### Difference between Computer Vision models and Word Embedding modles
-![comparison1](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig6.png)
+![comparison1](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig7.png)
 
 ### The difference between CV and WE model contrasted between Shallow and Deep Processing conditions
-![comparison2](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig7.png)
+![comparison2](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/fig8.png)
