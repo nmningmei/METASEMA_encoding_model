@@ -44,6 +44,39 @@ RDM = distance.squareform(distance.pdist(feature_representations - feature_repre
 np.fill_diagonal(RDM,np.nan)
 ```
 
+## Results
+
+### Average Variance Explained
+
+![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/Fig6.png)
+The average variance explained by the computer vision (VGG19, Densent169, MobilenetV2) and the word embedding (Fast Text, GloVe, Word2Vec) models, averaging across 27 subjects. The error-bars represent 95\% confidence interval of a bootstrapping of 1000 iterations.
+
+### Difference between Computer Vision models and Word Embedding modles
+
+![comparison1](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/Fig7.png)
+Differences between computer vision and word embedding models in variance explained. Computer vision models significantly explained more variance of the BOLD response compared to word embedding models. All one-sample t-tests against zero difference between models were significant and FDR corrected for multiple comparisons.
+
+### The difference between CV and WE model contrasted between Shallow and Deep Processing conditions
+
+![comparison2](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/Fig8.png)
+Overall difference between Word Embedding and Computer Vision models per ROI (* FDR corrected for multiple comparisons). We found that the advantage of computer vision models over word embeddings models was higher in the deep processing condition relative to the shallow processing in PCG, PHG, and POP, while the opposite pattern was observed in FFG, IPL, and ITL 
+
+### Number of positive voxel explained by the two models
+
+![positve](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/positive%20voxels%20(high).jpeg)
+The number of positive variance explained voxels for computer vision models and word embedding models. ROIs are color-coded and conditions are coded in different markers. 
+
+![posstat](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/difference%20of%20positive%20voxels.jpeg)
+The difference of the number of positive variance explained voxels between computer vision models and word embedding models for each ROI and condition. *: p < 0.05, **: p < 0.01, ***: p < 0.0001. 
+
+### Voxel-wise scores by the two models
+
+![voxelwise](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/voxel%20wise%20scores%20(high).jpeg)
+Variance explained of individual voxels for all ROIs and conditions. ROIs are color-coded and conditions are coded in different makers. Particularly, voxels that cannot be positively explained by either the computer vision nor the word embedding models are shown by black circles. A few (~100 voxels for all subjects, ROIs, and conditions) that have extreme negative varience explained are not shown on the figure. 
+
+![voxelstat](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/posterior%20probability%20of%20computer%20vision%20greater%20than%20word%20embedding%20(high).jpeg)
+The posterior probability of computer vision models explain more variance than the word embedding models for a given voxel in a given ROI and condition. A prior probability of computer vision models explain more variance than the word embedding models was given by Beta(2, 2). [This prior is centered at 0.5 and is lower for all other values](https://www.thomasjpfan.com/2015/09/bayesian-coin-flips/). For a given ROI and condition, a voxel is better explained by the computer vision models was labeled “1” while “0” if vis versa. The posterior probability was computed by multiplying the prior probability and the likelihood of “1”. The posterior was normalized by divided its vector norm before reporting. θ: probability of computer vision models explain more variance than the word embedding models. The dotted line represents the average of initial prior probability, which means a naive belief that computer vision and word embedding models explain the same amount of variance for a given voxel. 
+
 ## [Word Embedding Models in Spanish](https://github.com/dccuchile/spanish-word-embeddings)
 
 ![basic](https://jaxenter.com/wp-content/uploads/2018/08/image-2-768x632.png)
@@ -190,18 +223,4 @@ Word vector (From [Introduction to Word Vectors](https://medium.com/@jayeshbahir
 
 ![mobilenetRDM](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/metasema%20word2vec%20RDM%20%28img2vec%20%28mobilenetv2_1%29.png)
 
-## Results
-### Average Variance Explained
-![folds](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/Fig6.png)
 
-### Difference between Computer Vision models and Word Embedding modles
-![comparison1](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/Fig7.png)
-
-### The difference between CV and WE model contrasted between Shallow and Deep Processing conditions
-![comparison2](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/Fig8.png)
-
-### Number of positive voxel explained by the two models
-![positve](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/positive%20voxels%20(high).jpeg)
-
-### Voxel-wise scores by the two models
-![voxelwise](https://github.com/nmningmei/METASEMA_encoding_model/blob/master/figures/voxel%20wise%20scores%20(high).jpeg)
