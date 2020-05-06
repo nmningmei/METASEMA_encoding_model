@@ -1,4 +1,4 @@
-# Encoding model on fMRI data of word cognition tasks
+# For encoding model of paper: Decoding and encoding models reveal the role of mental simulation in  the brain representation of meaning
 
 ## Requirement
 - python3.+
